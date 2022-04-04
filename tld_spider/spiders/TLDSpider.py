@@ -14,6 +14,8 @@ class TLDSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         for line in response.css('#tld-table tbody tr'):
             suffix = line.css('.domain.tld a::text').get()
+            suffix = suffix.lstrip('\u200f')
+            suffix = suffix.rstrip('\u200e')
             tld = suffix[1:]
             idna_tld = tld.encode('idna').decode('utf-8')
             type_re = line.re('generic|infrastructure|country-code|sponsored|test')
