@@ -1,4 +1,4 @@
-name: Pylint
+name: Publish
 
 on: [push]
 
@@ -21,11 +21,11 @@ jobs:
 
     - name: Scrawl tlds
       run: |
-        scrapy crawl tld
+        scrapy crawl tld -O dist/tlds.json
 
     - name: Publish production
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: dist
-        publish_dir: ./tlds.json
+        publish_dir: ./dist
